@@ -12,7 +12,7 @@ export default function DiveOverlayUploader() {
   const [lineWidth, setLineWidth] = useState(10);
   const [fontColor, setFontColor] = useState("White");
   const [fontSize, setFontSize] = useState(60);
-  const [showDate, setShowDate] = useState(true);
+  const [showDate, setShowDate] = useState(false);
   const [includeBackground, setIncludeBackground] = useState(true);
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [showInstructions, setShowInstructions] = useState(true);
@@ -260,8 +260,8 @@ export default function DiveOverlayUploader() {
       <div className="content-wrapper">
         <div className="panel">
           <form className="form">
-            <div className="row-group">
-              <label htmlFor="logFile" className="file-label" style={{ width: "100%" }}>
+            <div className="row-group" style={{ justifyContent: "space-between", alignItems: "center" }}>
+              <label htmlFor="logFile" className="file-label" style={{ flex: 1 }}>
                 <div className={file ? "custom-file-upload uploaded" : "custom-file-upload"}>
                   {file ? file.name : lang === "kr" ? "다이빙 로그 파일을 업로드 하세요 (.csv 형식)" : "Upload your dive log file (.csv format)"}
                 </div>
@@ -273,7 +273,26 @@ export default function DiveOverlayUploader() {
                 onChange={handleFileChange}
                 style={{ display: "none" }}
               />
+              <button
+                className="sample-button"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  try {
+                    const res = await fetch("/sample.csv");
+                    const blob = await res.blob();
+                    const sampleFile = new File([blob], "sample.csv", { type: blob.type });
+                    setFile(sampleFile);
+                    setShowInstructions(false);
+                    setDiveSite("Pescador Island, Moalboal")
+                  } catch (err) {
+                    alert("샘플 파일을 불러오지 못했습니다");
+                  }
+                }}
+              >
+                {lang === "kr" ? "샘플 로그" : "Sample Log"}
+              </button>
             </div>
+
 
             {file && (
               <>
@@ -312,17 +331,41 @@ export default function DiveOverlayUploader() {
                   <label className="row-label">{lang === "kr" ? "폰트 컬러" : "Font Color"}</label>
                   <input type="color" value={fontColor} onChange={(e) => setFontColor(e.target.value)} />
                 </div>
-                <div className="row-group">
+                <div className="row-group" style={{ justifyContent: "space-between", alignItems: "center" }}>
                   <label className="row-label">{lang === "kr" ? "배경 이미지" : "BG Image"}</label>
-                  <input type="file" accept="image/*" onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onload = () => setBackgroundImage(reader.result);
-                      reader.readAsDataURL(file);
-                    }
-                  }} className="input-inline" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = () => setBackgroundImage(reader.result);
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    className="input-inline"
+                    style={{ flex: 1 }}
+                  />
+                  <button
+                    className="sample-bg-button"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      try {
+                        const res = await fetch("/sample-bg.jpg"); // 또는 png
+                        const blob = await res.blob();
+                        const reader = new FileReader();
+                        reader.onload = () => setBackgroundImage(reader.result);
+                        reader.readAsDataURL(blob);
+                      } catch (err) {
+                        alert("샘플 배경 이미지를 불러오지 못했습니다");
+                      }
+                    }}
+                  >
+                    {lang === "kr" ? "샘플 배경" : "Sample BG"}
+                  </button>
                 </div>
+
                 {backgroundImage && (
                   <div className="row-group">
                     <label className="row-label">{lang === "kr" ? "배경 포함" : "Include BG"}</label>

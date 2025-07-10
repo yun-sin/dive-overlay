@@ -17,10 +17,13 @@ body, html {
 }
 
 .title {
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 4vw, 2rem);  /* 반응형 폰트 크기 */
   font-weight: bold;
   margin-bottom: 2rem;
   text-align: center;
+  white-space: nowrap;     /* 🔥 줄바꿈 방지 */
+  overflow: hidden;        /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 너무 작을 때 말줄임표 */
 }
 
 .content-wrapper {
@@ -130,6 +133,8 @@ input[type="number"] {
 
 .input-inline {
   flex: 1;
+    min-width: 0;
+  max-width: 100%;
   background-color: #222;
   color: white;
   border: none;
@@ -164,7 +169,7 @@ input[type="number"] {
   background: rgba(0, 174, 239, 0.15); /* 반투명한 파란 유리 느낌 */
   color: white;
   padding: 1.2rem;
-  border-radius: 16px;
+  border-radius: 8px;
   text-align: center;
   font-weight: bold;
   backdrop-filter: blur(10px);         /* 🔥 핵심: 유리 흐림 효과 */
@@ -180,9 +185,6 @@ input[type="number"] {
   background: rgba(0, 174, 239, 0.25);
 }
 
-.custom-file-upload.uploaded {
-  padding: 0.75rem 1rem;
-}
 
 .file-label {
   cursor: pointer;
@@ -348,4 +350,51 @@ input[type="number"] {
 
 .modal-window button:active {
   transform: scale(0.98);
+}
+
+.sample-button {
+
+  background-color: transparent;
+  color: white;
+  border: 1px solid #00aaff;
+  border-radius: 8px;
+  padding: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+  backdrop-filter: blur(10px);         /* 🔥 핵심: 유리 흐림 효과 */
+  -webkit-backdrop-filter: blur(10px); /* 사파리 호환 */
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sample-button:hover {
+  background-color: #666;
+}
+
+
+.sample-bg-button {
+  background-color: transparent;
+  color: #00aaff;
+  border: 1px solid #00aaff;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  box-sizing: border-box;
+}
+
+.sample-bg-button:hover {
+  background-color: #00aaff;
+  color: black;
+}
+
+.custom-file-upload,
+.sample-button {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
