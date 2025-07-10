@@ -452,8 +452,8 @@ export default function DiveOverlayUploader() {
             ? "3단계: 다이빙 목록 탭을 선택하고 원하는 로그 선택하기"
             : "Step 3: Click the Dive List tab and select a dive log",
           4: isKr
-            ? "4단계: '파일' 메뉴에서 '내보내기'를 클릭한 후 .csv 형식을 선택해 저장하세요"
-            : "Step 4: Click 'Export' from the File menu and select .csv format",
+            ? "4단계: '파일' 메뉴에서 '내보내기'를 클릭한 후 'CSV(Excel)로 저장'을 선택해 저장하세요"
+            : "Step 4: Click 'Export' from the File menu and select 'As CSV (Excel)'",
         };
 
         const descriptions = {
