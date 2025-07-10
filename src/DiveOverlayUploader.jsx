@@ -16,7 +16,7 @@ export default function DiveOverlayUploader() {
   const [includeBackground, setIncludeBackground] = useState(true);
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [showInstructions, setShowInstructions] = useState(true);
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("kr");
   const [showGraph, setShowGraph] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
@@ -204,7 +204,7 @@ export default function DiveOverlayUploader() {
               const hasStop = firstStopDepth.some(d => d > 0.1);
               if (hasStop) {
                 ctx.strokeStyle = "red";
-                ctx.lineWidth = 7;
+                ctx.lineWidth = lineWidth;
                 ctx.beginPath();
                 for (let i = 0; i < time.length && i < firstStopDepth.length; i++) {
                   if (firstStopDepth[i] <= 0) continue;
@@ -256,7 +256,7 @@ export default function DiveOverlayUploader() {
 
   return (
     <div className="container">
-      <h1 className="title">{lang === "kr" ? "다이브 오버레이 생성기" : "Dive Overlay Generator"}</h1>
+      <h1 className="title">{lang === "kr" ? "다이브 로그 오버레이 생성기" : "Dive Log Overlay Generator"}</h1>
       <div className="content-wrapper">
         <div className="panel">
           <form className="form">
@@ -337,10 +337,8 @@ export default function DiveOverlayUploader() {
 
           <div className="row-group">
             <label className="row-label">{lang === "kr" ? "Language" : "Language"}</label>
-            <select value={lang} onChange={(e) => setLang(e.target.value)} className="input-inline">
-              <option value="kr">한국어</option>
-              <option value="en">English</option>
-            </select>
+            <label><input type="radio" checked={lang == "kr"} onChange={() => setLang("kr")} /> Kor</label>
+            <label><input type="radio" checked={lang == "en"} onChange={() => setLang("en")} /> Eng</label>
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -369,8 +367,8 @@ export default function DiveOverlayUploader() {
                 </li>
                 <li>
                   {lang === "kr"
-                    ? "[이미지 다운로드] 버튼을 클릭하여 결과 이미지를 저장하세요."
-                    : "Click [Download Image] to save the final result."}
+                    ? "[⬇️ 저장] 버튼을 클릭하여 결과 이미지를 저장하세요."
+                    : "Click [⬇️ Save] to save the final result."}
                 </li>
                 <br />
                 <li>
@@ -390,9 +388,6 @@ export default function DiveOverlayUploader() {
                         Shearwater Cloud
                       </a>{" "}
                       에서 다운로드하세요.{" "}
-                      <button className="circle-info-button" onClick={() => setShowModal(prev => !prev)} title="도움말">
-                        ℹ️
-                      </button>
                     </>
                   ) : (
                     <>
@@ -405,11 +400,14 @@ export default function DiveOverlayUploader() {
                         Shearwater Cloud
                       </a>
                       .{" "}
-                      <button className="circle-info-button" onClick={() => setShowModal(prev => !prev)} title="도움말">
-                        ℹ️
-                      </button>
+
                     </>
                   )}
+                  <button className="circle-info-button" onClick={() => setShowModal(prev => !prev)} title="도움말">
+                    {lang === "kr"
+                      ? "Shearwater Cloud에서 .csv 다운로드 방법"
+                      : "How to download .csv from Shearwater Cloud"}
+                  </button>
                 </li>
                 <li>
                   {lang === "kr"
@@ -428,73 +426,73 @@ export default function DiveOverlayUploader() {
                 </li>
               </ul>
 
-{showModal && (
-  <div className="modal-backdrop" onClick={() => setShowModal(false)}>
-    <div className="modal-window" onClick={(e) => e.stopPropagation()}>
-      <h3>
-        {lang === "kr"
-          ? "Shearwater Cloud에서 .csv 다운로드 방법"
-          : "How to download .csv from Shearwater Cloud"}
-      </h3>
+              {showModal && (
+                <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+                  <div className="modal-window" onClick={(e) => e.stopPropagation()}>
+                    <h3>
+                      {lang === "kr"
+                        ? "Shearwater Cloud에서 .csv 다운로드 방법"
+                        : "How to download .csv from Shearwater Cloud"}
+                    </h3>
 
-      {[1, 2, 3, 4].map((step) => {
-        const isKr = lang === "kr";
-        const imageSrc = `/images/${isKr ? "kr" : "en"}-step${step}.png`;
+                    {[1, 2, 3, 4].map((step) => {
+                      const isKr = lang === "kr";
+                      const imageSrc = `/images/${isKr ? "kr" : "en"}-step${step}.png`;
 
-        const titles = {
-          1: isKr
-            ? "1단계: Shearwater Cloud를 실행하고 다이빙 컴퓨터 연결하기"
-            : "Step 1: Launch Shearwater Cloud and connect your dive computer",
-          2: isKr
-            ? "2단계: Shearwater Cloud에 다이빙 로그 내려받기"
-            : "Step 2: Download dive logs to Shearwater Cloud",
-          3: isKr
-            ? "3단계: 다이빙 목록 탭을 선택하고 원하는 로그 선택하기"
-            : "Step 3: Click the Dive List tab and select a dive log",
-          4: isKr
-            ? "4단계: '파일' 메뉴에서 '내보내기'를 클릭한 후 'CSV(Excel)로 저장'을 선택해 저장하세요"
-            : "Step 4: Click 'Export' from the File menu and select 'As CSV (Excel)'",
-        };
+                      const titles = {
+                        1: isKr
+                          ? "1단계: Shearwater Cloud를 실행하고 다이빙 컴퓨터 연결하기"
+                          : "Step 1: Launch Shearwater Cloud and connect your dive computer",
+                        2: isKr
+                          ? "2단계: Shearwater Cloud에 다이빙 로그 내려받기"
+                          : "Step 2: Download dive logs to Shearwater Cloud",
+                        3: isKr
+                          ? "3단계: 다이빙 목록 탭을 선택하고 원하는 로그 선택하기"
+                          : "Step 3: Click the Dive List tab and select a dive log",
+                        4: isKr
+                          ? "4단계: '파일' 메뉴에서 '내보내기'를 클릭한 후 'CSV(Excel)로 저장'을 선택해 저장하세요"
+                          : "Step 4: Click 'Export' from the File menu and select 'As CSV (Excel)'",
+                      };
 
-        const descriptions = {
-          1: isKr
-            ? "PC에서 Shearwater Cloud를 실행하고 다이빙 컴퓨터를 연결하세요."
-            : "Launch Shearwater Cloud on your PC and connect your dive computer.",
-          2: isKr
-            ? "장비가 연결되면 자동으로 로그가 동기화되거나 수동으로 다운로드할 수 있습니다."
-            : "Once connected, the logs will sync automatically or you can manually download them.",
-          3: isKr
-            ? "좌측의 '다이브 목록' 탭을 클릭하고 내보낼 로그를 선택하세요."
-            : "Click the 'Dive List' tab on the left and choose the log you want to export.",
-          4: isKr
-            ? "상단 메뉴에서 '파일' → '내보내기'를 클릭하고, .csv 형식을 선택하여 저장하세요."
-            : "From the top menu, click 'File' → 'Export', then choose the .csv format and save the file.",
-        };
+                      const descriptions = {
+                        1: isKr
+                          ? "PC에서 Shearwater Cloud를 실행하고 다이빙 컴퓨터를 연결하세요."
+                          : "Launch Shearwater Cloud on your PC and connect your dive computer.",
+                        2: isKr
+                          ? "장비가 연결되면 자동으로 로그가 동기화되거나 수동으로 다운로드할 수 있습니다."
+                          : "Once connected, the logs will sync automatically or you can manually download them.",
+                        3: isKr
+                          ? "좌측의 '다이브 목록' 탭을 클릭하고 내보낼 로그를 선택하세요."
+                          : "Click the 'Dive List' tab on the left and choose the log you want to export.",
+                        4: isKr
+                          ? "상단 메뉴에서 '파일' → '내보내기'를 클릭하고, .csv 형식을 선택하여 저장하세요."
+                          : "From the top menu, click 'File' → 'Export', then choose the .csv format and save the file.",
+                      };
 
-        return (
-          <div className="step" key={step}>
-            <strong>{titles[step]}</strong>
-            <img
-              src={imageSrc}
-              alt={`Step ${step}`}
-              style={{
-                width: "100%",
-                borderRadius: "8px",
-                margin: "10px 0",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-              }}
-            />
-            <p>{descriptions[step]}</p>
-          </div>
-        );
-      })}
+                      return (
+                        <div className="step" key={step}>
+                          <strong>{titles[step]}</strong>
+                          <img
+                            src={imageSrc}
+                            alt={`Step ${step}`}
+                            style={{
+                              width: "100%",
+                              borderRadius: "8px",
+                              margin: "10px 0",
+                              boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+                            }}
+                          />
+                          <p>{descriptions[step]}</p>
+                        </div>
+                      );
+                    })}
 
-      <button onClick={() => setShowModal(false)}>
-        OK
-      </button>
-    </div>
-  </div>
-)}
+                    <button onClick={() => setShowModal(false)}>
+                      OK
+                    </button>
+                  </div>
+                </div>
+              )}
 
 
             </div>

@@ -72,7 +72,8 @@ input[type="number"] {
 }
 
 .generate-button {
-  background-color: #00AEEF;
+  width: 100%;
+  background-color: #0098d4;
   color: white;
   padding: 0.75rem;
   border-radius: 8px;
@@ -83,7 +84,7 @@ input[type="number"] {
 }
 
 .generate-button:hover {
-  background-color: #0098d4;
+  background-color: #00AEEF;
 }
 
 .result {
@@ -229,24 +230,19 @@ input[type="number"] {
 
 /* 버튼은 이전 스타일 유지 */
 .circle-info-button {
-  background-color: #333;
+  background-color: #0098d4;
   color: white;
+  padding: 0.5rem 0.75rem ;
+  border-radius: 8px;
+  font-weight: bold;
   border: none;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  font-size: 14px;
-  line-height: 22px;
-  text-align: center;
+  transition: background 0.2s;
   cursor: pointer;
-  padding: 0;
-  display: inline-block;
-  margin-left: 6px;
-  transition: background-color 0.2s;
+  
 }
 
 .circle-info-button:hover {
-  background-color: #555;
+  background-color: #00AEEF;;
 }
 
 /* 화면 전체 어두운 배경 */
