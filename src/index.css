@@ -227,3 +227,129 @@ input[type="number"] {
   color: white;
 }
 
+/* 버튼은 이전 스타일 유지 */
+.circle-info-button {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  display: inline-block;
+  margin-left: 6px;
+  transition: background-color 0.2s;
+}
+
+.circle-info-button:hover {
+  background-color: #555;
+}
+
+/* 화면 전체 어두운 배경 */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 중앙 모달 창 */
+.modal-window {
+  background: white;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 1000;
+}
+
+.modal-window {
+  background: #1c1c1c;
+  color: white;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 1000;
+
+  /* 스크롤바 커스터마이징 (Webkit 기반 브라우저용) */
+  scrollbar-width: thin;
+  scrollbar-color: #555 #1c1c1c; /* thumb, track */
+}
+
+.modal-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-window::-webkit-scrollbar-track {
+  background: #1c1c1c;
+  border-radius: 4px;
+}
+
+.modal-window::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+  border: 2px solid #1c1c1c; /* 안쪽 여백 효과 */
+}
+
+.modal-window button {
+  width: 100%;
+  height: 5rem;
+  background-color:  #00AEEF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  margin-top: 0px;
+}
+
+
+.step {
+  margin-bottom: 28px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 어두운 배경 기준 */
+}
+
+.step:last-child {
+  border-bottom: none;
+}
+
+.step strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.step p {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+.modal-window button:active {
+  transform: scale(0.98);
+}
