@@ -282,7 +282,9 @@ export default function DiveOverlayUploader() {
                     const blob = await res.blob();
                     const sampleFile = new File([blob], "sample.csv", { type: blob.type });
                     setFile(sampleFile);
-                    setShowInstructions(false);
+                    if (window.innerWidth <= 1184) {
+                      setShowInstructions(false);
+                    }
                     setDiveSite("Pescador Island, Moalboal")
                   } catch (err) {
                     alert("샘플 파일을 불러오지 못했습니다");
