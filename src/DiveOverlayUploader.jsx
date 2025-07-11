@@ -256,7 +256,6 @@ export default function DiveOverlayUploader() {
 
   return (
     <div className="container">
-      <h1 className="title">{lang === "kr" ? "다이브 로그 오버레이 생성기" : "Dive Log Overlay Generator"}</h1>
       <div className="content-wrapper">
         <div className="panel">
           <form className="form">
@@ -470,8 +469,72 @@ export default function DiveOverlayUploader() {
                     : "You can upload a background image and choose whether to include it in the final image."}
                 </li>
               </ul>
+            </div>
+          )}
 
-              {showModal && (
+
+          {showInstructions && (
+            <div style={{ marginTop: "1rem", textAlign: "right" }}>
+              <a
+                href="https://www.instagram.com/akoyunsin/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#00aaff", textDecoration: "underline" }}
+              >
+                @akoyunsin
+              </a>
+            </div>
+          )}
+        </div>
+
+        {imageURL && (
+          <div className="result">
+            <h2 className="subtitle">{lang === "kr" ? "생성된 이미지" : "Generated Image"}</h2>
+            <img src={imageURL} alt="Dive Summary" className="result-image" />
+
+            <div className="share-buttons-horizontal" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1.5rem', gap: '2rem' }}>
+              {[{
+                icon: '⬇️',
+                label: lang === 'kr' ? '저장' : 'Save',
+                onClick: null,
+                href: imageURL,
+                download: true
+              }, {
+                icon: '🖼️',
+                label: lang === 'kr' ? '이미지 복사' : 'Copy',
+                onClick: () => copyImageToClipboard(imageURL)
+              }].map((btn, idx) => (
+                <div key={idx} style={{
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+                  onClick={btn.onClick}>
+                  <div style={{
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '50%',
+                    backgroundColor: '#333',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.5rem',
+                    marginBottom: '0.4rem'
+                  }}>
+                    {btn.icon}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: 'white' }}>{btn.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+
+      {showModal && (
                 <div className="modal-backdrop" onClick={() => setShowModal(false)}>
                   <div className="modal-window" onClick={(e) => e.stopPropagation()}>
                     <h3>
@@ -538,71 +601,6 @@ export default function DiveOverlayUploader() {
                   </div>
                 </div>
               )}
-
-
-            </div>
-          )}
-
-
-          {showInstructions && (
-            <div style={{ marginTop: "3rem", textAlign: "right" }}>
-              <a
-                href="https://www.instagram.com/akoyunsin/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "#00aaff", textDecoration: "underline" }}
-              >
-                @akoyunsin
-              </a>
-            </div>
-          )}
-        </div>
-
-        {imageURL && (
-          <div className="result">
-            <h2 className="subtitle">{lang === "kr" ? "생성된 이미지" : "Generated Image"}</h2>
-            <img src={imageURL} alt="Dive Summary" className="result-image" />
-
-            <div className="share-buttons-horizontal" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1.5rem', gap: '2rem' }}>
-              {[{
-                icon: '⬇️',
-                label: lang === 'kr' ? '저장' : 'Save',
-                onClick: null,
-                href: imageURL,
-                download: true
-              }, {
-                icon: '🖼️',
-                label: lang === 'kr' ? '이미지 복사' : 'Copy',
-                onClick: () => copyImageToClipboard(imageURL)
-              }].map((btn, idx) => (
-                <div key={idx} style={{
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center'
-                }}
-                  onClick={btn.onClick}>
-                  <div style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                    backgroundColor: '#333',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem',
-                    marginBottom: '0.4rem'
-                  }}>
-                    {btn.icon}
-                  </div>
-                  <div style={{ fontSize: '0.85rem', color: 'white' }}>{btn.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 }

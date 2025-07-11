@@ -2,7 +2,7 @@
 body, html {
   margin: 0;
   padding: 0;
-  background-color: black;
+  background-color: black
 }
 
 .container {
@@ -15,6 +15,8 @@ body, html {
   min-height: 100vh;
   box-sizing: border-box;
 }
+
+
 
 .title {
   font-size: clamp(1.4rem, 4vw, 2rem);  /* 반응형 폰트 크기 */
@@ -36,6 +38,28 @@ body, html {
   width: 100%;
   max-width: 1200px;
 }
+
+@media (max-height: 1080px) {
+  .content-wrapper {
+    transform: scale(0.85);
+    transform-origin: top center;
+  }
+}
+@media (max-height: 900px) {
+  .content-wrapper {
+    transform: scale(0.80);
+    transform-origin: top center;
+  }
+}
+
+@media (max-height: 830px) {
+  .content-wrapper {
+    transform: scale(0.70);
+    transform-origin: top center;
+  }
+}
+
+
 
 .panel {
   background-color: #111;
@@ -100,6 +124,7 @@ input[type="number"] {
   text-align: center;
 }
 
+
 .result-image {
   max-width: 100%;
   border: 1px solid #444;
@@ -162,7 +187,7 @@ input[type="number"] {
 
 .instructions ul {
   padding-left: 1.2rem;
-  line-height: 2.1;
+  line-height: 1.6;
 }
 
 .custom-file-upload {
@@ -263,19 +288,6 @@ input[type="number"] {
 
 /* 중앙 모달 창 */
 .modal-window {
-  background: white;
-  padding: 24px;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 1000;
-}
-
-.modal-window {
   background: #1c1c1c;
   color: white;
   padding: 24px;
@@ -285,8 +297,9 @@ input[type="number"] {
   overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 1000;
+    position: fixed;
+  z-index: 9999;
+  transform: none !important;  /* main-wrapper의 scale 무시 */
 
   /* 스크롤바 커스터마이징 (Webkit 기반 브라우저용) */
   scrollbar-width: thin;
@@ -398,3 +411,4 @@ input[type="number"] {
   justify-content: center;
   box-sizing: border-box;
 }
+

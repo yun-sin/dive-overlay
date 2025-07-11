@@ -5,7 +5,7 @@ import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Contact from "./pages/Contact";
-import NavBar from "./components/NavBar";  // ✅ 추가
+import NavBar from "./components/NavBar";
 
 export default function App() {
     return (
