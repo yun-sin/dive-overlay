@@ -401,7 +401,12 @@ export default function DiveOverlayUploader() {
               <ul>
                 <li>
                   {lang === "kr"
-                    ? "이 웹앱은 데스크탑 환경에 최적화되어 있습니다. 원활한 사용을 위해 PC에서 접속해 주세요."
+                    ? "현재 Shearwater 로그 파일만 이미지 생성이 가능합니다."
+                    : "Currently, only Shearwater log files are supported for image generation."}
+                </li>
+                <li>
+                  {lang === "kr"
+                    ? "이 사이트는 데스크탑 환경에 최적화되어 있습니다. 원활한 사용을 위해 PC에서 접속해 주세요."
                     : "This web app is optimized for desktop. For best experience, please use it on a PC."}
                 </li>
                 <li>
@@ -414,12 +419,7 @@ export default function DiveOverlayUploader() {
                     ? "[⬇️ 저장] 버튼을 클릭하여 결과 이미지를 저장하세요."
                     : "Click [⬇️ Save] to save the final result."}
                 </li>
-                <br />
-                <li>
-                  {lang === "kr"
-                    ? "현재 Shearwater 로그 파일만 이미지 생성이 가능합니다."
-                    : "Currently, only Shearwater log files are supported for image generation."}
-                </li>
+
                 <li>
                   {lang === "kr" ? (
                     <>
@@ -465,8 +465,8 @@ export default function DiveOverlayUploader() {
                 </li>
                 <li>
                   {lang === "kr"
-                    ? "배경 이미지를 선택하고, 결과 이미지에 포함할지 여부를 설정할 수 있습니다."
-                    : "You can upload a background image and choose whether to include it in the final image."}
+                    ? "기본 이미지는 투명 배경입니다. 배경 이미지를 선택하고, 결과 이미지에 포함할지 여부를 설정할 수 있습니다."
+                    : "The default image has a transparent background. You can select a background image and choose whether to include it in the final image."}
                 </li>
               </ul>
             </div>
@@ -535,72 +535,72 @@ export default function DiveOverlayUploader() {
 
 
       {showModal && (
-                <div className="modal-backdrop" onClick={() => setShowModal(false)}>
-                  <div className="modal-window" onClick={(e) => e.stopPropagation()}>
-                    <h3>
-                      {lang === "kr"
-                        ? "Shearwater Cloud에서 .csv 다운로드 방법"
-                        : "How to download .csv from Shearwater Cloud"}
-                    </h3>
+        <div className="modal-backdrop" onClick={() => setShowModal(false)}>
+          <div className="modal-window" onClick={(e) => e.stopPropagation()}>
+            <h3>
+              {lang === "kr"
+                ? "Shearwater Cloud에서 .csv 다운로드 방법"
+                : "How to download .csv from Shearwater Cloud"}
+            </h3>
 
-                    {[1, 2, 3, 4].map((step) => {
-                      const isKr = lang === "kr";
-                      const imageSrc = `/images/${isKr ? "kr" : "en"}-step${step}.png`;
+            {[1, 2, 3, 4].map((step) => {
+              const isKr = lang === "kr";
+              const imageSrc = `/images/${isKr ? "kr" : "en"}-step${step}.png`;
 
-                      const titles = {
-                        1: isKr
-                          ? "1단계: Shearwater Cloud를 실행하고 다이빙 컴퓨터 연결하기"
-                          : "Step 1: Launch Shearwater Cloud and connect your dive computer",
-                        2: isKr
-                          ? "2단계: Shearwater Cloud에 다이빙 로그 내려받기"
-                          : "Step 2: Download dive logs to Shearwater Cloud",
-                        3: isKr
-                          ? "3단계: 다이빙 목록 탭을 선택하고 원하는 로그 선택하기"
-                          : "Step 3: Click the Dive List tab and select a dive log",
-                        4: isKr
-                          ? "4단계: '파일' 메뉴에서 '내보내기'를 클릭한 후 'CSV(Excel)로 저장'을 선택해 저장하세요"
-                          : "Step 4: Click 'Export' from the File menu and select 'As CSV (Excel)'",
-                      };
+              const titles = {
+                1: isKr
+                  ? "1단계: Shearwater Cloud를 실행하고 다이빙 컴퓨터 연결하기"
+                  : "Step 1: Launch Shearwater Cloud and connect your dive computer",
+                2: isKr
+                  ? "2단계: Shearwater Cloud에 다이빙 로그 내려받기"
+                  : "Step 2: Download dive logs to Shearwater Cloud",
+                3: isKr
+                  ? "3단계: 다이빙 목록 탭을 선택하고 원하는 로그 선택하기"
+                  : "Step 3: Click the Dive List tab and select a dive log",
+                4: isKr
+                  ? "4단계: '파일' 메뉴에서 '내보내기'를 클릭한 후 'CSV(Excel)로 저장'을 선택해 저장하세요"
+                  : "Step 4: Click 'Export' from the File menu and select 'As CSV (Excel)'",
+              };
 
-                      const descriptions = {
-                        1: isKr
-                          ? "PC에서 Shearwater Cloud를 실행하고 다이빙 컴퓨터를 연결하세요."
-                          : "Launch Shearwater Cloud on your PC and connect your dive computer.",
-                        2: isKr
-                          ? "장비가 연결되면 자동으로 로그가 동기화되거나 수동으로 다운로드할 수 있습니다."
-                          : "Once connected, the logs will sync automatically or you can manually download them.",
-                        3: isKr
-                          ? "좌측의 '다이브 목록' 탭을 클릭하고 내보낼 로그를 선택하세요."
-                          : "Click the 'Dive List' tab on the left and choose the log you want to export.",
-                        4: isKr
-                          ? "상단 메뉴에서 '파일' → '내보내기'를 클릭하고, .csv 형식을 선택하여 저장하세요."
-                          : "From the top menu, click 'File' → 'Export', then choose the .csv format and save the file.",
-                      };
+              const descriptions = {
+                1: isKr
+                  ? "PC에서 Shearwater Cloud를 실행하고 다이빙 컴퓨터를 연결하세요."
+                  : "Launch Shearwater Cloud on your PC and connect your dive computer.",
+                2: isKr
+                  ? "장비가 연결되면 자동으로 로그가 동기화되거나 수동으로 다운로드할 수 있습니다."
+                  : "Once connected, the logs will sync automatically or you can manually download them.",
+                3: isKr
+                  ? "좌측의 '다이브 목록' 탭을 클릭하고 내보낼 로그를 선택하세요."
+                  : "Click the 'Dive List' tab on the left and choose the log you want to export.",
+                4: isKr
+                  ? "상단 메뉴에서 '파일' → '내보내기'를 클릭하고, .csv 형식을 선택하여 저장하세요."
+                  : "From the top menu, click 'File' → 'Export', then choose the .csv format and save the file.",
+              };
 
-                      return (
-                        <div className="step" key={step}>
-                          <strong>{titles[step]}</strong>
-                          <img
-                            src={imageSrc}
-                            alt={`Step ${step}`}
-                            style={{
-                              width: "100%",
-                              borderRadius: "8px",
-                              margin: "10px 0",
-                              boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-                            }}
-                          />
-                          <p>{descriptions[step]}</p>
-                        </div>
-                      );
-                    })}
-
-                    <button onClick={() => setShowModal(false)}>
-                      OK
-                    </button>
-                  </div>
+              return (
+                <div className="step" key={step}>
+                  <strong>{titles[step]}</strong>
+                  <img
+                    src={imageSrc}
+                    alt={`Step ${step}`}
+                    style={{
+                      width: "100%",
+                      borderRadius: "8px",
+                      margin: "10px 0",
+                      boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+                    }}
+                  />
+                  <p>{descriptions[step]}</p>
                 </div>
-              )}
+              );
+            })}
+
+            <button onClick={() => setShowModal(false)}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
