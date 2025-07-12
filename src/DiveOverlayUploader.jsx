@@ -12,12 +12,12 @@ export default function DiveOverlayUploader() {
   const [alignment, setAlignment] = useState("left");
   const [lineWidth, setLineWidth] = useState(10);
   const [fontColor, setFontColor] = useState("White");
-  const [fontSize, setFontSize] = useState(60);
+  const [fontSize, setFontSize] = useState(90);
   const [showDate, setShowDate] = useState(false);
   const [includeBackground, setIncludeBackground] = useState(true);
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [showInstructions, setShowInstructions] = useState(true);
-  const [lang, setLang] = useState("kr");
+  const [lang, setLang] = useState("en");
   const [showGraph, setShowGraph] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
@@ -144,7 +144,7 @@ export default function DiveOverlayUploader() {
 
             if (diveSite) {
               ctx.textAlign = "left";
-              ctx.font = `bold ${fontSize}px sans-serif`;
+              ctx.font = `bold 60px sans-serif`;
               ctx.fillText(diveSite, 80, yHeader);
             }
 
@@ -155,15 +155,15 @@ export default function DiveOverlayUploader() {
               ctx.fillText(timeString, canvas.width - 80, yHeader + 22);
             }
 
-            let y = yHeader + 200;
+            let y = yHeader + 150;
             const drawText = (label, value) => {
               ctx.fillStyle = fontColor;
               ctx.textAlign = alignment;
               const xAlign = alignment === "left" ? 80 : alignment === "right" ? canvas.width - 80 : canvas.width / 2;
 
-              ctx.font = `bold ${fontSize * 0.5}px sans-serif`;
+              ctx.font = `bold ${fontSize * 0.4}px sans-serif`;
               ctx.fillText(label, xAlign, y);
-              y += 60;
+              y += 90;
 
               let displayFontSize = fontSize;
               if (label === (lang === "kr" ? "기체" : "Gas")) {
@@ -177,7 +177,7 @@ export default function DiveOverlayUploader() {
 
               ctx.font = `bold ${displayFontSize}px sans-serif`;
               ctx.fillText(value, xAlign, y);
-              y += 100;
+              y += 130;
             };
 
             drawText(lang === "kr" ? "최대 수심" : "Max Depth", `${maxDepth.toFixed(1)} m`);
