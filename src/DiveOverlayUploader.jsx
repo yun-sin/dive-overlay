@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Papa from "papaparse";
 import "./index.css";
 
 export default function DiveOverlayUploader() {
+  const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [imageURL, setImageURL] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,6 @@ export default function DiveOverlayUploader() {
   const [lang, setLang] = useState("kr");
   const [showGraph, setShowGraph] = useState(true);
   const [showModal, setShowModal] = useState(false);
-
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -258,7 +258,7 @@ export default function DiveOverlayUploader() {
     <div className="container">
       <div className="content-wrapper">
         <div className="panel">
-          <form className="form">
+          <div className="form">
             <div className="row-group" style={{ justifyContent: "space-between", alignItems: "center" }}>
               <label htmlFor="logFile" className="file-label" style={{ flex: 1 }}>
                 <div className={file ? "custom-file-upload uploaded" : "custom-file-upload"}>
@@ -269,6 +269,7 @@ export default function DiveOverlayUploader() {
                 id="logFile"
                 type="file"
                 accept=".csv"
+                ref={fileInputRef}  // ✅ ref 연결
                 onChange={handleFileChange}
                 style={{ display: "none" }}
               />
@@ -280,6 +281,12 @@ export default function DiveOverlayUploader() {
                     const res = await fetch("/sample.csv");
                     const blob = await res.blob();
                     const sampleFile = new File([blob], "sample.csv", { type: blob.type });
+
+                    // ✅ file input 초기화
+                    if (fileInputRef.current) {
+                      fileInputRef.current.value = "";
+                    }
+
                     setFile(sampleFile);
                     if (window.innerWidth <= 1184) {
                       setShowInstructions(false);
@@ -375,7 +382,7 @@ export default function DiveOverlayUploader() {
                 )}
               </>
             )}
-          </form>
+          </div>
 
           <hr className="divider" />
 
@@ -496,38 +503,53 @@ export default function DiveOverlayUploader() {
               {[{
                 icon: '⬇️',
                 label: lang === 'kr' ? '저장' : 'Save',
-                onClick: null,
                 href: imageURL,
-                download: true
               }, {
                 icon: '🖼️',
                 label: lang === 'kr' ? '이미지 복사' : 'Copy',
                 onClick: () => copyImageToClipboard(imageURL)
-              }].map((btn, idx) => (
-                <div key={idx} style={{
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center'
-                }}
-                  onClick={btn.onClick}>
-                  <div style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                    backgroundColor: '#333',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem',
-                    marginBottom: '0.4rem'
-                  }}>
-                    {btn.icon}
+              }].map((btn, idx) => {
+                const content = (
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center'
+                    }}
+                    onClick={btn.onClick}
+                  >
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      backgroundColor: '#333',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.5rem',
+                      marginBottom: '0.4rem'
+                    }}>
+                      {btn.icon}
+                    </div>
+                    <div style={{ fontSize: '0.85rem', color: 'white' }}>{btn.label}</div>
                   </div>
-                  <div style={{ fontSize: '0.85rem', color: 'white' }}>{btn.label}</div>
-                </div>
-              ))}
+                );
+
+                return btn.href ? (
+                  <a
+                    key={idx}
+                    href={btn.href}
+                    download
+                    style={{ textDecoration: 'none' }}
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <div key={idx}>{content}</div>
+                );
+              })}
             </div>
           </div>
         )}
